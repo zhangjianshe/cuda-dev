@@ -52,12 +52,15 @@ RUN chmod +x /usr/local/bin/start-docker.sh \
 
 VOLUME /var/lib/docker
 
+
 # Install Docker Compose
 RUN set -eux; \
     curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
     docker-compose version && \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+ENV HTTP_PROXY=""
+ENV HTTPS_PROXY=""
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["tail","-f","/dev/null"]
