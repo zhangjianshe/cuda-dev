@@ -19,7 +19,8 @@ RUN set -eux; \
     if [ "${UBUNTU_VERSION}" != "20.04" ]; then \
     update-alternatives --set iptables /usr/sbin/iptables-legacy; \
     fi
-
+ENV HTTP_PROXY="http://192.168.1.139:7890"
+ENV HTTPS_PROXY="http://192.168.1.139:7890"
 # Install Docker and buildx
 RUN set -eux; \
     arch="$(uname -m)"; \
