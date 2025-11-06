@@ -1,6 +1,6 @@
 # This Dockerfile is based upon sysbox example images: https://github.com/nestybox/dockerfiles/
 # but with some modifications to have a more generic image.
-ARG UBUNTU_VERSION="22.04"
+ARG UBUNTU_VERSION="20.04"
 FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu20.04
 
 ARG UBUNTU_VERSION
@@ -42,6 +42,9 @@ RUN apt-get update &&                            \
                                                                       \
     # Create default 'admin/admin' user
     useradd --create-home --shell /bin/bash admin && echo "admin:admin" | chpasswd && adduser admin sudo
+
+ENV HTTP_PROXY="http://192.168.1.139:7890"
+ENV HTTPS_PROXY="http://192.168.1.139:7890"
 
 # Disable systemd services/units that are unnecessary within a container.
 RUN systemctl mask systemd-udevd.service \
@@ -90,6 +93,9 @@ RUN curl --retry 5 --retry-max-time 40 \
     chmod 755 /usr/local/bin/docker-compose && \
     mkdir -p /usr/local/lib/docker/cli-plugins && \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+
+ENV HTTP_PROXY=""
+ENV HTTPS_PROXY=""
 
 # Make use of stopsignal (instead of sigterm) to stop systemd containers.
 STOPSIGNAL SIGRTMIN+3
