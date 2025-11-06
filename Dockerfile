@@ -1,5 +1,5 @@
-ARG UBUNTU_VERSION="24.04"
-FROM ubuntu:${UBUNTU_VERSION}
+ARG UBUNTU_VERSION="20.04"
+FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu20.04
 
 ARG UBUNTU_VERSION
 ENV DOCKER_CHANNEL=stable \
@@ -11,7 +11,7 @@ ENV DOCKER_CHANNEL=stable \
 # Install common dependencies
 RUN set -eux; \
     apt-get update && apt-get install -y \
-    ca-certificates wget curl iptables supervisor \
+    ca-certificates wget curl iptables supervisor git \
     && rm -rf /var/lib/apt/lists/*
 
 # Set iptables-legacy for Ubuntu 22.04 and newer
@@ -59,4 +59,4 @@ RUN set -eux; \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
 
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["bash"]
+CMD ["tail","-f","/dev/null"]
