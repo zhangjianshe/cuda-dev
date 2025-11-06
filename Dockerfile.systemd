@@ -1,7 +1,7 @@
 # This Dockerfile is based upon sysbox example images: https://github.com/nestybox/dockerfiles/
 # but with some modifications to have a more generic image.
-ARG UBUNTU_VERSION="24.04"
-FROM ubuntu:${UBUNTU_VERSION}
+ARG UBUNTU_VERSION="22.04"
+FROM nvidia/cuda:12.8.1-cudnn-devel-ubuntu20.04
 
 ARG UBUNTU_VERSION
 ENV DOCKER_VERSION=28.5.1 \
