@@ -11,6 +11,7 @@ ENV DOCKER_CHANNEL=stable \
 # Install common dependencies
 RUN set -eux; \
     apt-get update && apt-get install -y \
+        apt-utils \
         ca-certificates \
         wget \
         curl \
