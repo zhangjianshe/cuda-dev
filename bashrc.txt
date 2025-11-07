@@ -46,4 +46,6 @@ fi
 # Note: The entrypoint.sh also echoes this time, but having it here ensures it
 # appears right before the interactive prompt starts.
 BUILD_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-echo -e "Welcome to the interactive shell! Initialization time: ${BUILD_TIME}\n"
+echo -e "苍灵CUDA研发工作平台: ${BUILD_TIME}"
+echo -e "---需要更更多的功能请 TEL:15910868680.\n"
+cd /root/
