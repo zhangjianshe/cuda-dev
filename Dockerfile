@@ -91,6 +91,6 @@ EXPOSE 22
 
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
-
+COPY bashrc.txt /root/.bashrc
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["tail","-f","/dev/null"]
