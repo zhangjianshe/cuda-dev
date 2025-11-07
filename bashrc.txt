@@ -58,7 +58,9 @@ fi
 # Note: The entrypoint.sh also echoes this time, but having it here ensures it
 # appears right before the interactive prompt starts.
 BUILD_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-echo -e "        \033[34m\n苍灵CUDA研发工作平台: ${BUILD_TIME}"
-echo -e "        - 需要更更多的功能请 TEL:15910868680. zhangjianshe@gmail.com \n\033[0m" 
+echo  "        \033[34m\n苍灵CUDA研发工作平台: ${BUILD_TIME}"
+echo  "        - 需要更更多的功能请 TEL:15910868680. zhangjianshe@gmail.com \033[0m"
+echo  " "
+
 # Ensure the user starts in the root home directory
 cd /root/
