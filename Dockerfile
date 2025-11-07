@@ -93,13 +93,15 @@ ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
 ARG BUILD_TIME
 COPY bashrc.txt /root/.bashrc
-# Expand BUILD_TIME at build time (requires double quotes)
-RUN set -eux; \
-    if [ -n "${BUILD_TIME}" ]; then \
-      sed -i "s/__BUILD_TIME__/${BUILD_TIME}/g" /root/.bashrc; \
-    fi
-
+# --- Configuration Copy and Build-Time Injection ---
+COPY bashrc.txt /root/.bashrc
 COPY vim.txt /root/.vimrc
+COPY .tmux.conf /root/.tmux.conf
+
+# Calculate build time using 'date' *inside* the container context (Asia/Shanghai) and substitute the placeholder.
+RUN BUILD_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S %Z'); \
+    sed -i "s/__BUILD_TIME__/${BUILD_TIME}/g" /root/.bashrc
+# ---
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["tail","-f","/dev/null"]
