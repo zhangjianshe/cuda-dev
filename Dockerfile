@@ -9,7 +9,9 @@ ENV DOCKER_CHANNEL=stable \
     DEBUG=false
 
 # Install common dependencies
-RUN set -eux; \
+RUN echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections && \
+    echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections && \
+    set -eux; \
     apt-get update && apt-get install -y \
         ca-certificates \
         wget \
