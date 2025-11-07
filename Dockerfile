@@ -98,7 +98,7 @@ COPY bashrc.txt /root/.bashrc
 COPY vim.txt /root/.vimrc
 
 # Calculate build time using 'date' *inside* the container context (Asia/Shanghai) and substitute the placeholder.
-RUN BUILD_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S %Z'); \
+RUN BUILD_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S'); \
     sed -i "s/__BUILD_TIME__/${BUILD_TIME}/g" /root/.bashrc
 # ---
 
