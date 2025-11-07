@@ -45,8 +45,8 @@ RUN set -eux; \
     if [ "${UBUNTU_VERSION}" != "20.04" ]; then \
     update-alternatives --set iptables /usr/sbin/iptables-legacy; \
     fi
-ENV HTTP_PROXY="http://192.168.1.139:7890"
-ENV HTTPS_PROXY="http://192.168.1.139:7890"
+ENV HTTP_PROXY="192.168.1.139:7890"
+ENV HTTPS_PROXY="192.168.1.139:7890"
 # Install Docker and buildx
 RUN set -eux; \
     arch="$(uname -m)"; \
@@ -91,7 +91,14 @@ EXPOSE 22
 
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
+ARG BUILD_TIME
 COPY bashrc.txt /root/.bashrc
+# Expand BUILD_TIME at build time (requires double quotes)
+RUN set -eux; \
+    if [ -n "${BUILD_TIME}" ]; then \
+      sed -i "s/__BUILD_TIME__/${BUILD_TIME}/g" /root/.bashrc; \
+    fi
+
 COPY vim.txt /root/.vimrc
 
 ENTRYPOINT ["entrypoint.sh"]
