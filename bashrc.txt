@@ -60,8 +60,8 @@ fi
 BUILD_TIME='__BUILD_TIME__'
 echo  -e "\n        \033[31m\033[1m  苍灵CUDA研发工作平台 \033[0m\n"
 echo  -e "        - \033[36m需要更更多的功能请 TEL:15910868680. zhangjianshe@gmail.com"
-echo  -e "        - 远程ssh(IP参看工作空间说明)登录帐号 root/cangling \033[0m"
-echo  -e "        -                       __BUILD_TIME__ <https://dev.cangling.cn>"
+echo  -e "        - 远程ssh(IP参看工作空间说明)登录帐号 root/cangling \033[0m\n"
+echo  -e "          https://dev.cangling.cn    __BUILD_TIME__"
 echo  -e " "
 
 # Ensure the user starts in the root home directory
