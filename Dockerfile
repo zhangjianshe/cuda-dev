@@ -9,9 +9,7 @@ ENV DOCKER_CHANNEL=stable \
     DEBUG=false
 
 # Install common dependencies
-RUN echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections && \
-    echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections && \
-    set -eux; \
+RUN set -eux; \
     apt-get update && apt-get install -y \
         ca-certificates \
         wget \
@@ -25,17 +23,22 @@ RUN echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections && \
         netcat-openbsd \
         iproute2 \
         rsync \
-        openssh-server && \
-        # --- SSH Configuration ---
-        # Allow root login via password (CRITICAL for container SSH access)
-        sed -i 's/#\?PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
-        # Create the necessary run directory for SSH
-        mkdir -p /var/run/sshd && \
-        # Set a temporary default password for the root user (USE FOR DEBUG ONLY!)
-        # USER: root, PASSWORD: debugpass
-        echo 'root:cangling' | chpasswd  \
-        # --- Cleanup ---
-    && rm -rf /var/lib/apt/lists/*
+        openssh-server \
+        tzdata && \
+    # --- FIX: Set Timezone Robustly (Bypasses interactive prompt) ---
+    # 1. Create a symbolic link to the desired timezone file
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    # 2. Reconfigure tzdata non-interactively to ensure the change is permanent
+    dpkg-reconfigure --frontend noninteractive tzdata && \
+    # --- SSH Configuration ---
+    # Allow root login via password (CRITICAL for container SSH access)
+    sed -i 's/#\?PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
+    # Create the necessary run directory for SSH
+    mkdir -p /var/run/sshd && \
+    # Set a temporary default password for the root user (USER: root, PASSWORD: cangling)
+    echo 'root:cangling' | chpasswd && \
+    # --- Cleanup ---
+    rm -rf /var/lib/apt/lists/*
 
 # Set iptables-legacy for Ubuntu 22.04 and newer
 RUN set -eux; \
