@@ -13,16 +13,28 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
+# --- HIGH-CONTRAST LIGHT THEME CUSTOMIZATION (Prompt) ---
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1 format: [User@Host (Dark Grey/Black)]:[Path (Standard Blue)]$
+    # \[\033[30m\]: Black/Dark Grey for high contrast on white background
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[30m\]\u@\h\[\033[00m\]:\[\033[0;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
+# -----------------------------------------------------------
+
 
 # enable color support of ls and add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    # --- HIGH-CONTRAST LIGHT THEME CUSTOMIZATION (LS_COLORS) ---
+    # We define LS_COLORS explicitly to ensure high-contrast colors
+    # for common elements like directories (Dark Blue 01;34) and executables (Dark Green 01;32).
+    # The default bright colors are hard to read on white.
+    LS_COLORS='di=01;34:ln=01;36:or=01;05;31:mi=0:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=30;46:st=37;44:ex=01;32:*.tar=0:*.tgz=0:*.arc=0:*.arj=0:*.taz=0:*.lha=0:*.lz4=0:*.lzh=0:*.lzma=0:*.tlz=0:*.txz=0:*.tzo=0:*.t7z=0:*.zip=0:*.z=0:*.dz=0:*.gz=0:*.lrz=0:*.lz=0:*.lzo=0:*.xz=0:*.zst=0:*.bz2=0:*.bz=0:*.tbz=0:*.tbz2=0:*.tz=0:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.s7z=01;31:*.dmg=0:*.m2ts=0:*.m4v=0:*.mov=0:*.mp4=0:*.mpeg=0:*.mpg=0:*.ogg=0:*.ogm=0:*.ogv=0:*.qt=0:*.to=0:*.wmv=0:*.xvid=0:*.flv=0:*.vid=0:*.webm=0:*.avi=0:*.nuv=0:*.ram=0:*.rm=0:*.rmvb=0:*.ts=0:*.vob=0:*.aiff=0:*.au=0:*.mid=0:*.midi=0:*.mka=0:*.mp3=0:*.mpa=0:*.wav=0:*.wma=0:*.flac=0:*.m4a=0:*.amr=0:*.opus=0:*.ac3=0:*.eac3=0:*.dts=0:*.dtshd=0:*.aac=0:*.ogg=0:*.psd=0:*.svg=0:*.svgz=0:*.tif=0:*.tiff=0:*.bmp=0:*.ico=0:*.pcx=0:*.pcd=0:*.ras=0:*.tga=0:*.webp=0:*.xbm=0:*.xpm=0:*.png=0:*.gif=0:*.jpg=0:*.jpeg=0:*.pnm=0:*.tpt=0:*.tiff=0:*.jp2=0:*.j2k=0:*.jpf=0:*.jpx=0:*.jpm=0:*.mj2=0:*.dng=0:*.cr2=0:*.crw=0:*.raf=0:*.orf=0:*.nef=0:*.pef=0:*.srw=0:*.kdc=0:*.dcr=0:*.x3f=0:*.erf=0:*.mrw=0:*.mos=0:*.raw=0:*.iiq=0:*.rwz=0:*.rwl=0:*.pcap=0:*.cap=0:*.ncap=0:*.trc=0:*.trace=0:*.dmp=0:*.img=0:*.iso=0:*.vdi=0:*.vmdk=0:*.vhd=0:*.ova=0:*.ovf=0:*.exe=01;32:*.cmd=01;32:*.bat=01;32:*.sh=01;32:*.pl=01;32:*.py=01;32:*.lua=01;32:*.rb=01;32:*.php=01;32:*.js=01;32:*.jsx=01;32:*.ts=01;32:*.tsx=01;32:*.'
+    export LS_COLORS # Make sure it's exported for sub-shells
+    # -----------------------------------------------------------
+    
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -46,6 +58,8 @@ fi
 # Note: The entrypoint.sh also echoes this time, but having it here ensures it
 # appears right before the interactive prompt starts.
 BUILD_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-echo -e "苍灵CUDA研发工作平台: ${BUILD_TIME}"
+echo -e "\n苍灵CUDA研发工作平台: ${BUILD_TIME}"
 echo -e "---需要更更多的功能请 TEL:15910868680.\n"
+
+# Ensure the user starts in the root home directory
 cd /root/
