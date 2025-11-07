@@ -96,7 +96,6 @@ COPY bashrc.txt /root/.bashrc
 # --- Configuration Copy and Build-Time Injection ---
 COPY bashrc.txt /root/.bashrc
 COPY vim.txt /root/.vimrc
-COPY .tmux.conf /root/.tmux.conf
 
 # Calculate build time using 'date' *inside* the container context (Asia/Shanghai) and substitute the placeholder.
 RUN BUILD_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S %Z'); \
