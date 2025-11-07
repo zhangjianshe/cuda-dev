@@ -92,5 +92,7 @@ EXPOSE 22
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
 COPY bashrc.txt /root/.bashrc
+COPY vim.txt /root/.vimrc
+
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["tail","-f","/dev/null"]

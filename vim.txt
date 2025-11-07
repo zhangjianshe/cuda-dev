@@ -1,0 +1,48 @@
+" --------------------------------------------------------------------
+" Custom .vimrc Configuration for Enhanced Development
+" --------------------------------------------------------------------
+
+" === General Settings ===
+set nocompatible            " Be iMproved, required
+filetype plugin indent on   " Enable file type detection, plugins, and indentation
+set hidden                  " Allow buffers to be hidden (unsaved files)
+set history=1000            " Remember 1000 lines of history
+set laststatus=2            " Always show the status line
+set encoding=utf-8          " Use UTF-8 encoding
+
+" === Appearance and UI ===
+syntax enable               " Enable syntax highlighting
+colorscheme desert          " Use the 'desert' color scheme (good contrast)
+set t_Co=256                " Enable 256 colors for better color schemes
+
+set number                  " Show absolute line numbers
+set relativenumber          " Show relative line numbers (useful for quick jumps: 5j)
+set ruler                   " Show cursor position in the status line
+set showmatch               " Highlight matching brackets/parentheses
+set cmdheight=1             " Command line height
+
+" === Indentation and Formatting ===
+set tabstop=4               " Number of spaces a <Tab> counts for
+set shiftwidth=4            " Number of spaces to use for auto-indent
+set expandtab               " Use spaces instead of tabs (RECOMMENDED for most languages)
+set autoindent              " Copy indent from current line to new line
+set smartindent             " Smart auto-indenting (based on file type)
+set wrap                    " Wrap long lines
+
+" === Search Settings ===
+set ignorecase              " Ignore case when searching
+set smartcase               " Do not ignore case if search pattern contains uppercase characters
+set hlsearch                " Highlight all matches
+set incsearch               " Highlight matches as you type
+
+" === Performance ===
+set lazyredraw              " Don't redraw while executing macros/scripts/etc.
+set nobackup                " Do not make backups
+set nowritebackup           " Do not make backup files while editing
+
+" === Custom Mappings ===
+" Map F5 to save and quit (common shortcut for quickly applying changes)
+nnoremap <F5> :wq<CR>
+
+" Map Q to quickly quit without saving (useful for readonly files)
+nnoremap Q :q!<CR>
