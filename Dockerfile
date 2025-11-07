@@ -23,6 +23,16 @@ RUN set -eux; \
         netcat-openbsd \
         iproute2 \
         rsync \
+        openssh-server && \
+        # --- SSH Configuration ---
+        # Allow root login via password (CRITICAL for container SSH access)
+        sed -i 's/#\?PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
+        # Create the necessary run directory for SSH
+        mkdir -p /var/run/sshd && \
+        # Set a temporary default password for the root user (USE FOR DEBUG ONLY!)
+        # USER: root, PASSWORD: debugpass
+        echo 'root:cangling' | chpasswd  \
+        # --- Cleanup ---
     && rm -rf /var/lib/apt/lists/*
 
 # Set iptables-legacy for Ubuntu 22.04 and newer
@@ -72,7 +82,7 @@ RUN set -eux; \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
 
 # config docker daemon.json
-
+EXPOSE 22
 
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
