@@ -11,7 +11,18 @@ ENV DOCKER_CHANNEL=stable \
 # Install common dependencies
 RUN set -eux; \
     apt-get update && apt-get install -y \
-    ca-certificates wget curl iptables supervisor git \
+        ca-certificates \
+        wget \
+        curl \
+        iptables \
+        supervisor \
+        git \
+        vim \
+        tmux \
+        iputils-ping \
+        netcat-openbsd \
+        iproute2 \
+        rsync \
     && rm -rf /var/lib/apt/lists/*
 
 # Set iptables-legacy for Ubuntu 22.04 and newer
@@ -59,6 +70,10 @@ RUN set -eux; \
     chmod +x /usr/local/bin/docker-compose && \
     docker-compose version && \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+
+# config docker daemon.json
+
+
 ENV HTTP_PROXY=""
 ENV HTTPS_PROXY=""
 
