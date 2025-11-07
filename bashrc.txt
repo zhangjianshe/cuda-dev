@@ -45,7 +45,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
+alias ll='ls -lF'
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -58,8 +58,7 @@ fi
 # Note: The entrypoint.sh also echoes this time, but having it here ensures it
 # appears right before the interactive prompt starts.
 BUILD_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-echo -e "\n苍灵CUDA研发工作平台: ${BUILD_TIME}"
-echo -e "---需要更更多的功能请 TEL:15910868680.\n"
-
+echo -e "\033[34m\n苍灵CUDA研发工作平台: ${BUILD_TIME}"
+echo -e "- 需要更更多的功能请 TEL:15910868680. zhangjianshe@gmail.com \n\033[0m" 
 # Ensure the user starts in the root home directory
 cd /root/
