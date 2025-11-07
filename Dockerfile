@@ -10,8 +10,12 @@ ENV DOCKER_CHANNEL=stable \
 
 # Install common dependencies
 RUN set -eux; \
+    # --- FIX: Force non-interactive configuration and pre-seed tzdata settings ---
+    export DEBIAN_FRONTEND=noninteractive; \
+    echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections; \
+    echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections; \
+    # --------------------------------------------------------------------------
     apt-get update && apt-get install -y \
-        apt-utils \
         ca-certificates \
         wget \
         curl \
@@ -26,11 +30,6 @@ RUN set -eux; \
         rsync \
         openssh-server \
         tzdata && \
-    # --- FIX: Set Timezone Robustly (Bypasses interactive prompt) ---
-    # 1. Create a symbolic link to the desired timezone file
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    # 2. Reconfigure tzdata non-interactively to ensure the change is permanent
-    dpkg-reconfigure --frontend noninteractive tzdata && \
     # --- SSH Configuration ---
     # Allow root login via password (CRITICAL for container SSH access)
     sed -i 's/#\?PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
