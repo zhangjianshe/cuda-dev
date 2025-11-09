@@ -15,6 +15,12 @@ RUN set -eux; \
     echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections; \
     echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections; \
     # --------------------------------------------------------------------------
+    # --- NEW: Generate and Set zh_CN.UTF-8 Locale ---
+    echo 'zh_CN.UTF-8 UTF-8' >> /etc/locale.gen; \
+    locale-gen; \
+    echo 'LANG=zh_CN.UTF-8' > /etc/default/locale; \
+    # ------------------------------------------------
+
     apt-get update && apt-get install -y \
         ca-certificates \
         wget \
